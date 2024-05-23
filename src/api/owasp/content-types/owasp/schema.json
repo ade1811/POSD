@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "owasps",
+  "info": {
+    "singularName": "owasp",
+    "pluralName": "owasps",
+    "displayName": "OWASP",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "idOWASP": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "descrizione": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text"
+    },
+    "cwes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cwe.cwe"
+    }
+  }
+}
