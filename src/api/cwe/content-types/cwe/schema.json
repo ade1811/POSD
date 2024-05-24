@@ -33,6 +33,12 @@
         }
       },
       "type": "text"
+    },
+    "owasps": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::owasp.owasp",
+      "mappedBy": "cwes"
     }
   }
 }

@@ -36,8 +36,9 @@
     },
     "cwes": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::cwe.cwe"
+      "relation": "manyToMany",
+      "target": "api::cwe.cwe",
+      "inversedBy": "owasps"
     }
   }
 }

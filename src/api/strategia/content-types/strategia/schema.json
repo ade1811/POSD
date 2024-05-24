@@ -44,6 +44,12 @@
         "DATA",
         "PROCESS"
       ]
+    },
+    "patterns": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::pattern.pattern",
+      "mappedBy": "strategias"
     }
   }
 }

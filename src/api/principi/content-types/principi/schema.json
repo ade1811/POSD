@@ -25,6 +25,12 @@
       "type": "text",
       "required": true,
       "unique": true
+    },
+    "patterns": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::pattern.pattern",
+      "mappedBy": "principis"
     }
   }
 }

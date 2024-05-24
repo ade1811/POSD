@@ -30,6 +30,12 @@
         }
       },
       "type": "text"
+    },
+    "patterns": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::pattern.pattern",
+      "mappedBy": "iso_phases"
     }
   }
 }

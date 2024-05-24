@@ -44,23 +44,27 @@
     },
     "strategias": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::strategia.strategia"
+      "relation": "manyToMany",
+      "target": "api::strategia.strategia",
+      "inversedBy": "patterns"
     },
     "articolo_gdprs": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::articolo-gdpr.articolo-gdpr"
+      "relation": "manyToMany",
+      "target": "api::articolo-gdpr.articolo-gdpr",
+      "inversedBy": "patterns"
     },
     "iso_phases": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::iso.iso"
+      "relation": "manyToMany",
+      "target": "api::iso.iso",
+      "inversedBy": "patterns"
     },
     "principis": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::principi.principi"
+      "relation": "manyToMany",
+      "target": "api::principi.principi",
+      "inversedBy": "patterns"
     },
     "esempi": {
       "pluginOptions": {

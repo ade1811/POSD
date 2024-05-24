@@ -590,6 +590,53 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -741,53 +788,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiArticoloGdprArticoloGdpr extends Schema.CollectionType {
   collectionName: 'articolo_gdprs';
   info: {
@@ -823,6 +823,11 @@ export interface ApiArticoloGdprArticoloGdpr extends Schema.CollectionType {
       'api::articolo-gdpr.articolo-gdpr',
       'oneToMany',
       'api::owasp.owasp'
+    >;
+    patterns: Attribute.Relation<
+      'api::articolo-gdpr.articolo-gdpr',
+      'manyToMany',
+      'api::pattern.pattern'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -879,6 +884,11 @@ export interface ApiCweCwe extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    owasps: Attribute.Relation<
+      'api::cwe.cwe',
+      'manyToMany',
+      'api::owasp.owasp'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -923,6 +933,11 @@ export interface ApiIsoIso extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    patterns: Attribute.Relation<
+      'api::iso.iso',
+      'manyToMany',
+      'api::pattern.pattern'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -970,7 +985,7 @@ export interface ApiOwaspOwasp extends Schema.CollectionType {
           localized: true;
         };
       }>;
-    cwes: Attribute.Relation<'api::owasp.owasp', 'oneToMany', 'api::cwe.cwe'>;
+    cwes: Attribute.Relation<'api::owasp.owasp', 'manyToMany', 'api::cwe.cwe'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1034,22 +1049,22 @@ export interface ApiPatternPattern extends Schema.CollectionType {
       }>;
     strategias: Attribute.Relation<
       'api::pattern.pattern',
-      'oneToMany',
+      'manyToMany',
       'api::strategia.strategia'
     >;
     articolo_gdprs: Attribute.Relation<
       'api::pattern.pattern',
-      'oneToMany',
+      'manyToMany',
       'api::articolo-gdpr.articolo-gdpr'
     >;
     iso_phases: Attribute.Relation<
       'api::pattern.pattern',
-      'oneToMany',
+      'manyToMany',
       'api::iso.iso'
     >;
     principis: Attribute.Relation<
       'api::pattern.pattern',
-      'oneToMany',
+      'manyToMany',
       'api::principi.principi'
     >;
     esempi: Attribute.RichText &
@@ -1120,6 +1135,11 @@ export interface ApiPrincipiPrincipi extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    patterns: Attribute.Relation<
+      'api::principi.principi',
+      'manyToMany',
+      'api::pattern.pattern'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1180,6 +1200,11 @@ export interface ApiStrategiaStrategia extends Schema.CollectionType {
           localized: true;
         };
       }>;
+    patterns: Attribute.Relation<
+      'api::strategia.strategia',
+      'manyToMany',
+      'api::pattern.pattern'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1218,10 +1243,10 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
       'api::articolo-gdpr.articolo-gdpr': ApiArticoloGdprArticoloGdpr;
       'api::cwe.cwe': ApiCweCwe;
       'api::iso.iso': ApiIsoIso;

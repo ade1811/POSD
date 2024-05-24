@@ -38,6 +38,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::owasp.owasp"
+    },
+    "patterns": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::pattern.pattern",
+      "mappedBy": "articolo_gdprs"
     }
   }
 }
