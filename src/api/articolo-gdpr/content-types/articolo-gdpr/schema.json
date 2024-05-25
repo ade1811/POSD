@@ -34,11 +34,6 @@
       },
       "type": "text"
     },
-    "owasps": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::owasp.owasp"
-    },
     "patterns": {
       "type": "relation",
       "relation": "manyToMany",

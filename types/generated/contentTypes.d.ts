@@ -819,11 +819,6 @@ export interface ApiArticoloGdprArticoloGdpr extends Schema.CollectionType {
           localized: true;
         };
       }>;
-    owasps: Attribute.Relation<
-      'api::articolo-gdpr.articolo-gdpr',
-      'oneToMany',
-      'api::owasp.owasp'
-    >;
     patterns: Attribute.Relation<
       'api::articolo-gdpr.articolo-gdpr',
       'manyToMany',
@@ -986,6 +981,11 @@ export interface ApiOwaspOwasp extends Schema.CollectionType {
         };
       }>;
     cwes: Attribute.Relation<'api::owasp.owasp', 'manyToMany', 'api::cwe.cwe'>;
+    patterns: Attribute.Relation<
+      'api::owasp.owasp',
+      'manyToMany',
+      'api::pattern.pattern'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1086,6 +1086,11 @@ export interface ApiPatternPattern extends Schema.CollectionType {
         };
       }> &
       Attribute.DefaultTo<0>;
+    owasps: Attribute.Relation<
+      'api::pattern.pattern',
+      'manyToMany',
+      'api::owasp.owasp'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

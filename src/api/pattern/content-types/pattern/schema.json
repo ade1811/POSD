@@ -90,6 +90,12 @@
       },
       "type": "decimal",
       "default": 0
+    },
+    "owasps": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::owasp.owasp",
+      "mappedBy": "patterns"
     }
   }
 }
