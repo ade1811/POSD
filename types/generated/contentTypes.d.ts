@@ -949,6 +949,38 @@ export interface ApiIsoIso extends Schema.CollectionType {
   };
 }
 
+export interface ApiMailingListMailingList extends Schema.CollectionType {
+  collectionName: 'mailing_lists';
+  info: {
+    singularName: 'mailing-list';
+    pluralName: 'mailing-lists';
+    displayName: 'Mailing List';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    nome: Attribute.String & Attribute.Required;
+    cognome: Attribute.String & Attribute.Required;
+    email: Attribute.Email & Attribute.Required & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::mailing-list.mailing-list',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::mailing-list.mailing-list',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiOwaspOwasp extends Schema.CollectionType {
   collectionName: 'owasps';
   info: {
@@ -1255,6 +1287,7 @@ declare module '@strapi/types' {
       'api::articolo-gdpr.articolo-gdpr': ApiArticoloGdprArticoloGdpr;
       'api::cwe.cwe': ApiCweCwe;
       'api::iso.iso': ApiIsoIso;
+      'api::mailing-list.mailing-list': ApiMailingListMailingList;
       'api::owasp.owasp': ApiOwaspOwasp;
       'api::pattern.pattern': ApiPatternPattern;
       'api::principi.principi': ApiPrincipiPrincipi;
