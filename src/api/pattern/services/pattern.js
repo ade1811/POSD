@@ -7,29 +7,43 @@
 const { createCoreService } = require('@strapi/strapi').factories;
 
 module.exports = createCoreService('api::pattern.pattern', ({ strapi }) => ({
-    async like(ctx){
-        const id = ctx.params.id
-        const entity = await strapi.entityService.findOne('api::pattern.pattern', id)
-        const update = await strapi.entityService.update('api::pattern.pattern', id, 
+    async like(id){
+        try {
+            strapi.log.info("Inizio Service pattern.like")
+            let prevEntity = await strapi.entityService.findOne('api::pattern.pattern', id)
+            let update = await strapi.entityService.update('api::pattern.pattern', id, 
             {
                 data: {
-                    feedback: entity.feedback + 1
+                    feedback: prevEntity.feedback + 1
                 }
             }
-        )
-        return {message: "ok"}
+            )
+            strapi.log.info(update)
+            strapi.log.info("Fine Service pattern.like")
+            return update
+        } catch (error) {
+            strapi.log.error(error)
+            throw error
+        }
     },
 
-    async dislike(ctx){
-        const id = ctx.params.id
-        const entity = await strapi.entityService.findOne('api::pattern.pattern', id)
-        const update = await strapi.entityService.update('api::pattern.pattern', id, 
+    async dislike(id){
+        try {
+            strapi.log.info("Inizio Service pattern.like")
+            let prevEntity = await strapi.entityService.findOne('api::pattern.pattern', id)
+            let update = await strapi.entityService.update('api::pattern.pattern', id, 
             {
                 data: {
-                    feedback: entity.feedback - 0.5
+                    feedback: prevEntity.feedback - 0.5
                 }
             }
-        )
-        return {message: "ok"}
+            )
+            strapi.log.info(update)
+            strapi.log.info("Fine Service pattern.like")
+            return update
+        } catch (error) {
+            strapi.log.error(error)
+            throw error
+        }
     }
 }));
